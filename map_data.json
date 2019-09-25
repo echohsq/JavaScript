@@ -1,0 +1,10 @@
+{"State":1,"Message":"成功","Result":{"name":"中石油业务量","value":[{name: '西北地区',value: 1564 },{name: '总部',value: 2567 },
+{name: '',value: 0 },{name: '东北地区',value: 4567 },{name: '华东地区',value: 5567 },
+{name: '华南地区',value: 6567 },{name: '青岛',value: 8567 },{name: '西南地区',value: 7567 }], "dataRange": [{start: 1564, end: 1564, color: '#1E90FF'},
+					{start: 2567, end: 2567, color: '#F4A460'},
+					{start: 3, end: 3, color: '	#A9A9A9'},
+					{start: 4567, end: 4567, color: '	#9932CC	'},
+					{start: 5567, end: 5567, color: '#00FF7F'},
+                    {start: 6567, end: 6567, color: '#F4A460'},
+                    {start: 8567, end: 8567, color:  '#6B8E23'},
+                    {start: 7567, end: 7567, color: '	#CD5C5C'},]}}
