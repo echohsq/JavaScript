@@ -1,3 +1,3 @@
-{"State":1,"Message":"成功","Result":{"name":"中石油业务量", "data": ["{name: '西北地区',value: 1567 }","{name: '总部',value: 2567 }",
-"{name: '',value: 0 }","{name: '东北地区',value: 4567 }","{name: '华东地区',value: 5567 }","{name: '华南地区',value: 6567 }",
-"{name: '青岛',value: 8567 }","{name: '西南地区',value: 7567 }"]}}
+{"State":1,"Message":"成功","Result":{"name":"中石油业务量", "data": [{name: '西北地区',value: 1567 },{name: '总部',value: 2567 },
+{name: '',value: 0 },{name: '东北地区',value: 4567 },{name: '华东地区',value: 5567 },{name: '华南地区',value: 6567 },
+{name: '青岛',value: 8567 },{name: '西南地区',value: 7567 }]}}
