@@ -1,0 +1,29 @@
+{
+  "status": "0",
+  "message": "success",
+  "data": {
+      "mapName": [{
+          "name": "东北地区",
+          "value" : 1234
+      },{
+        "name": "西北地区",
+        "value" : 5678
+    }],
+      "flow": [
+          {
+              "id": "会签",
+              "complete":800,
+              "uncomplete": 200
+          },
+          {
+              "id": "审计",
+              "complete":800,
+              "uncomplete": 200
+          }
+      ],
+      "people": {
+        "online": 300,
+        "total": 1200
+      }
+  }
+}

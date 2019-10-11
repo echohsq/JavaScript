@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>我的自适应</title>
+
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- echarts -->
+    <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="echarts.min.js"></script>
+    <script type="text/javascript" src="echarts-liquidfill.min.js"></script>
+    <script type="text/javascript" src="china1.js"></script>
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+        <style>
+            body
+            {
+                margin: 0;
+            }
+            .label {
+                    text-align: center;
+                    font-size: 70px;
+                    line-height: 380px;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 300px;
+                    color: #bcb216;
+                    font-family: 'D-DIN';
+                }
+            .label2 {
+                text-align: center;
+                font-size: 22px;
+                line-height: 520px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 300px;
+                color: #38aa92;
+            }
+        </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+            <div class="row" style="padding: 0 0;">
+                    <div  class="col-lg-6 col-md-6" style="background: #fff;">
+                        <div class="row">
+                            <div id="people" style="height: 180px;"></div>
+                            
+                            <div id="line" style="height: 500px;"></div>
+                            <div class="col-lg-4 col-md-4">
+                                <div id="pie1" style="height: 250px;"></div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                    <div id="pie2" style="height: 250px;"></div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                    <div id="pie3" style="height: 250px;"></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                      <div class="col-lg-6 col-md-6" style="background: #fff">
+                         <div class="row" style="padding: 0 0;">
+                            <div id="map" style="height: 380px;"></div>
+                            <div id="bar" style="height: 300px;"></div>
+                            <div class="col-lg-4 col-md-4">
+                                <div id="gauge1" style="height: 250px;"></div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                    <div id="gauge2" style="height: 250px;"></div>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                    <div id="gauge3" style="height: 250px;"></div>
+                            </div>
+                        </div>
+                      </div>
+
+            </div>
+
+            </div>
+    </div>
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="jquery.min.js"></script>
+    <script type="text/javascript">
+
+        // 基于准备好的dom，初始化echarts实例
+        var charts = [];
+        var myChartBar = echarts.init(document.getElementById('bar'));
+    
+        // 指定图表的配置项和数据
+        var optionBar = {
+            title: {
+                text: '纸货实货交易量'
+            },
+            tooltip: {},
+            legend: {
+                data:['销量']
+            },
+            xAxis: {
+                data: ["东北","西北","华东","华南", "青岛", "总部"]
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'bar',
+                data: [50, 200, 560, 100, 100, 200]
+            }]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChartBar.setOption(optionBar);   
+        charts.push(myChartBar);
+    // 基于准备好的dom，初始化echarts实例
+    var myChartMap = echarts.init(document.getElementById('map'));
+                                
+                                // 指定图表的配置项和数据
+                                var optionMap = {
+                                        title : {
+                                            text: '纸货实货交易量',
+                                            subtext: '中联油',
+                                            left: 'center'
+                                        },
+                                        tooltip : {
+                                            trigger: 'item'
+                                        },
+                                        legend: {
+                                            orient: 'vertical',
+                                            left: 'left',
+                                            data:['东北','西北','华东', '华南', '青岛', '总部']
+                                        },
+                                        visualMap: {
+                                            min: 0,
+                                            max: 2500,
+                                            left: 'left',
+                                            top: 'bottom',
+                                            text:['高','低'],           // 文本，默认为数值文本
+                                            calculable : true
+                                        },
+                                        // toolbox: {
+                                        //     show: true,
+                                        //     orient : 'vertical',
+                                        //     left: 'right',
+                                        //     top: 'center',
+                                        //     feature : {
+                                        //         mark : {show: true},
+                                        //         dataView : {show: true, readOnly: false},
+                                        //         restore : {show: true},
+                                        //         saveAsImage : {show: true}
+                                        //     }
+                                        // },
+                                        series : [
+                                            {
+                                                name: '华东',
+                                                type: 'map',
+                                                mapType: 'china',
+                                                roam: false,
+                                                label: {
+                                                    normal: {
+                                                        show: false
+                                                    },
+                                                    emphasis: {
+                                                        show: true
+                                                    }
+                                                },
+                                                data:[
+                                                    {name: '北京',value: Math.round(Math.random()*1000)},
+                                                    {name: '天津',value: Math.round(Math.random()*1000)},
+                                                    {name: '上海',value: Math.round(Math.random()*1000)},
+                                                    {name: '重庆',value: Math.round(Math.random()*1000)},
+                                                    {name: '河北',value: Math.round(Math.random()*1000)},
+                                                    {name: '河南',value: Math.round(Math.random()*1000)},
+                                                    {name: '云南',value: Math.round(Math.random()*1000)},
+                                                    {name: '辽宁',value: Math.round(Math.random()*1000)},
+                                                    {name: '黑龙江',value: Math.round(Math.random()*1000)},
+                                                    {name: '湖南',value: Math.round(Math.random()*1000)},
+                                                    {name: '安徽',value: Math.round(Math.random()*1000)},
+                                                    {name: '山东',value: Math.round(Math.random()*1000)},
+                                                    {name: '新疆',value: Math.round(Math.random()*1000)},
+                                                    {name: '江苏',value: Math.round(Math.random()*1000)},
+                                                    {name: '浙江',value: Math.round(Math.random()*1000)},
+                                                    {name: '江西',value: Math.round(Math.random()*1000)},
+                                                    {name: '湖北',value: Math.round(Math.random()*1000)},
+                                                    {name: '广西',value: Math.round(Math.random()*1000)},
+                                                    {name: '甘肃',value: Math.round(Math.random()*1000)},
+                                                    {name: '山西',value: Math.round(Math.random()*1000)},
+                                                    {name: '内蒙古',value: Math.round(Math.random()*1000)},
+                                                    {name: '陕西',value: Math.round(Math.random()*1000)},
+                                                    {name: '吉林',value: Math.round(Math.random()*1000)},
+                                                    {name: '福建',value: Math.round(Math.random()*1000)},
+                                                    {name: '贵州',value: Math.round(Math.random()*1000)},
+                                                    {name: '广东',value: Math.round(Math.random()*1000)},
+                                                    {name: '青海',value: Math.round(Math.random()*1000)},
+                                                    {name: '西藏',value: Math.round(Math.random()*1000)},
+                                                    {name: '四川',value: Math.round(Math.random()*1000)},
+                                                    {name: '宁夏',value: Math.round(Math.random()*1000)},
+                                                    {name: '海南',value: Math.round(Math.random()*1000)},
+                                                    {name: '台湾',value: Math.round(Math.random()*1000)},
+                                                    {name: '香港',value: Math.round(Math.random()*1000)},
+                                                    {name: '澳门',value: Math.round(Math.random()*1000)}
+                                                ]
+                                            },
+                                            {
+                                                name: '西北',
+                                                type: 'map',
+                                                mapType: 'china',
+                                                label: {
+                                                    normal: {
+                                                        show: false
+                                                    },
+                                                    emphasis: {
+                                                        show: true
+                                                    }
+                                                },
+                                                data:[
+                                                    {name: '北京',value: Math.round(Math.random()*1000)},
+                                                    {name: '天津',value: Math.round(Math.random()*1000)},
+                                                    {name: '上海',value: Math.round(Math.random()*1000)},
+                                                    {name: '重庆',value: Math.round(Math.random()*1000)},
+                                                    {name: '河北',value: Math.round(Math.random()*1000)},
+                                                    {name: '安徽',value: Math.round(Math.random()*1000)},
+                                                    {name: '新疆',value: Math.round(Math.random()*1000)},
+                                                    {name: '浙江',value: Math.round(Math.random()*1000)},
+                                                    {name: '江西',value: Math.round(Math.random()*1000)},
+                                                    {name: '山西',value: Math.round(Math.random()*1000)},
+                                                    {name: '内蒙古',value: Math.round(Math.random()*1000)},
+                                                    {name: '吉林',value: Math.round(Math.random()*1000)},
+                                                    {name: '福建',value: Math.round(Math.random()*1000)},
+                                                    {name: '广东',value: Math.round(Math.random()*1000)},
+                                                    {name: '西藏',value: Math.round(Math.random()*1000)},
+                                                    {name: '四川',value: Math.round(Math.random()*1000)},
+                                                    {name: '宁夏',value: Math.round(Math.random()*1000)},
+                                                    {name: '香港',value: Math.round(Math.random()*1000)},
+                                                    {name: '澳门',value: Math.round(Math.random()*1000)}
+                                                ]
+                                            },
+                                            {
+                                                name: '总部',
+                                                type: 'map',
+                                                mapType: 'china',
+                                                label: {
+                                                    normal: {
+                                                        show: false
+                                                    },
+                                                    emphasis: {
+                                                        show: true
+                                                    }
+                                                },
+                                                data:[
+                                                    {name: '北京',value: Math.round(Math.random()*1000)},
+                                                    {name: '天津',value: Math.round(Math.random()*1000)},
+                                                    {name: '上海',value: Math.round(Math.random()*1000)},
+                                                    {name: '广东',value: Math.round(Math.random()*1000)},
+                                                    {name: '台湾',value: Math.round(Math.random()*1000)},
+                                                    {name: '香港',value: Math.round(Math.random()*1000)},
+                                                    {name: '澳门',value: Math.round(Math.random()*1000)}
+                                                ]
+                                            },
+                                            {
+                                                name: '华南',
+                                                type: 'map',
+                                                mapType: 'china',
+                                                label: {
+                                                    normal: {
+                                                        show: false
+                                                    },
+                                                    emphasis: {
+                                                        show: true
+                                                    }
+                                                },
+                                                data:[
+                                                    {name: '北京',value: Math.round(Math.random()*1000)},
+                                                    {name: '天津',value: Math.round(Math.random()*1000)},
+                                                    {name: '上海',value: Math.round(Math.random()*1000)},
+                                                    {name: '重庆',value: Math.round(Math.random()*1000)},
+                                                    {name: '河北',value: Math.round(Math.random()*1000)},
+                                                    {name: '安徽',value: Math.round(Math.random()*1000)},
+                                                    {name: '新疆',value: Math.round(Math.random()*1000)},
+                                                    {name: '浙江',value: Math.round(Math.random()*1000)},
+                                                    {name: '江西',value: Math.round(Math.random()*1000)},
+                                                    {name: '山西',value: Math.round(Math.random()*1000)},
+                                                    {name: '内蒙古',value: Math.round(Math.random()*1000)},
+                                                    {name: '吉林',value: Math.round(Math.random()*1000)},
+                                                    {name: '福建',value: Math.round(Math.random()*1000)},
+                                                    {name: '广东',value: Math.round(Math.random()*1000)},
+                                                    {name: '西藏',value: Math.round(Math.random()*1000)},
+                                                    {name: '四川',value: Math.round(Math.random()*1000)},
+                                                    {name: '宁夏',value: Math.round(Math.random()*1000)},
+                                                    {name: '香港',value: Math.round(Math.random()*1000)},
+                                                    {name: '澳门',value: Math.round(Math.random()*1000)}
+                                                ]
+                                            },
+                                            {
+                                                name: '东北',
+                                                type: 'map',
+                                                mapType: 'china',
+                                                label: {
+                                                    normal: {
+                                                        show: false
+                                                    },
+                                                    emphasis: {
+                                                        show: true
+                                                    }
+                                                },
+                                                data:[
+                                                    {name: '北京',value: Math.round(Math.random()*1000)},
+                                                    {name: '天津',value: Math.round(Math.random()*1000)},
+                                                    {name: '上海',value: Math.round(Math.random()*1000)},
+                                                    {name: '广东',value: Math.round(Math.random()*1000)},
+                                                    {name: '台湾',value: Math.round(Math.random()*1000)},
+                                                    {name: '香港',value: Math.round(Math.random()*1000)},
+                                                    {name: '澳门',value: Math.round(Math.random()*1000)}
+                                                ]
+                                            },
+                                            {
+                                                name: '青岛',
+                                                type: 'map',
+                                                mapType: 'china',
+                                                label: {
+                                                    normal: {
+                                                        show: false
+                                                    },
+                                                    emphasis: {
+                                                        show: true
+                                                    }
+                                                },
+                                                data:[
+                                                    {name: '北京',value: Math.round(Math.random()*1000)},
+                                                    {name: '天津',value: Math.round(Math.random()*1000)},
+                                                    {name: '上海',value: Math.round(Math.random()*1000)},
+                                                    {name: '重庆',value: Math.round(Math.random()*1000)},
+                                                    {name: '河北',value: Math.round(Math.random()*1000)},
+                                                    {name: '安徽',value: Math.round(Math.random()*1000)},
+                                                    {name: '新疆',value: Math.round(Math.random()*1000)},
+                                                    {name: '浙江',value: Math.round(Math.random()*1000)},
+                                                    {name: '江西',value: Math.round(Math.random()*1000)},
+                                                    {name: '山西',value: Math.round(Math.random()*1000)},
+                                                    {name: '内蒙古',value: Math.round(Math.random()*1000)},
+                                                    {name: '吉林',value: Math.round(Math.random()*1000)},
+                                                    {name: '福建',value: Math.round(Math.random()*1000)},
+                                                    {name: '广东',value: Math.round(Math.random()*1000)},
+                                                    {name: '西藏',value: Math.round(Math.random()*1000)},
+                                                    {name: '四川',value: Math.round(Math.random()*1000)},
+                                                    {name: '宁夏',value: Math.round(Math.random()*1000)},
+                                                    {name: '香港',value: Math.round(Math.random()*1000)},
+                                                    {name: '澳门',value: Math.round(Math.random()*1000)}
+                                                ]
+                                            }
+                                        ]
+                                    };
+                                // 使用刚指定的配置项和数据显示图表。
+                                myChartMap.setOption(optionMap);   
+                                charts.push(myChartMap);
+                                var myChartLine = echarts.init(document.getElementById('line'));
+var optionLine = {
+    title: {
+        text: '操作员（录入，匹配，结算）折线图'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['录入','匹配','结算']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['一月','二月','三月','四月','五月','六月','七月', '八月', '九月', '十月', '十一月', '十二月']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name:'录入',
+            type:'line',
+            stack: '总量',
+            data:[120, 132, 101, 134, 90, 230, 210, 240, 180, 121, 189, 200,]
+        },
+        {
+            name:'匹配',
+            type:'line',
+            stack: '总量',
+            data:[220, 182, 191, 234, 290, 330, 310, 450, 345, 675, 876, 456, 678]
+        },
+        {
+            name:'结算',
+            type:'line',
+            stack: '总量',
+            data:[280, 392, 101, 394, 290, 330, 320, 453, 234, 456, 679, 670]
+        }
+    ]
+};
+myChartLine.setOption(optionLine);
+charts.push(myChartLine);
+
+var myChartPie1 = echarts.init(document.getElementById('pie1'));
+
+var optionPie1 = {
+    title: {
+        text: '录入',
+        left: 'center',
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        x: 'left',
+        data:[]
+    },
+    series: [
+        {
+            name:'录入',
+            type:'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+                normal: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '30',
+                        fontWeight: 'bold'
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data:[
+                {value:335, name:'原油'},
+                {value:310, name:'成品油'},
+                {value:234, name:'化工品'},
+                {value:135, name:'天然气'},
+                {value:1548, name:'海运'}
+            ]
+        }
+    ]
+};
+myChartPie1.setOption(optionPie1);
+charts.push(myChartPie1);
+var myChartPie2 = echarts.init(document.getElementById('pie2'));
+
+var optionPie2 = {
+    title: {
+        text: '执行匹配',
+        left: 'center',
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        x: 'left',
+        data:[]
+    },
+    series: [
+        {
+            name:'执行匹配',
+            type:'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+                normal: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '30',
+                        fontWeight: 'bold'
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data:[
+                {value:835, name:'原油'},
+                {value:310, name:'成品油'},
+                {value:124, name:'化工品'},
+                {value:535, name:'天然气'},
+                {value:148, name:'海运'}
+            ]
+        }
+    ]
+};
+myChartPie2.setOption(optionPie2);
+charts.push(myChartPie2);
+var myChartPie3 = echarts.init(document.getElementById('pie3'));
+
+var optionPie3 = {
+    title: {
+        text: '结算',
+        left: 'center',
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        x: 'left',
+        data:[]
+    },
+    series: [
+        {
+            name:'结算',
+            type:'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+                normal: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    show: true,
+                    textStyle: {
+                        fontSize: '30',
+                        fontWeight: 'bold'
+                    }
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data:[
+                {value:235, name:'原油'},
+                {value:1239, name:'成品油'},
+                {value:176, name:'化工品'},
+                {value:335, name:'天然气'},
+                {value:248, name:'海运'}
+            ]
+        }
+    ]
+};
+myChartPie3.setOption(optionPie3);
+charts.push(myChartPie3);
+var myChartPeople = echarts.init(document.getElementById('people'));
+var optionPeople = {
+    series: [{
+        type: 'liquidFill',
+        name : '在线人数：',
+        data: [{name: '', value: 123}, 0.4, 0.2, 0.1],
+        direction: 'right',
+        radius: '60%',
+        shape: 'roundRect',
+        center: ['15%', '50%'],
+        backgroundStyle: {
+            borderColor: '#156ACF',
+            borderWidth: 1,
+            shadowColor: 'rgba(0, 0, 0, 0.4)',
+            shadowBlur: 20
+        },
+        outline: {
+            show: false
+        },
+        waveAnimation: true, // 禁止左右波动
+        label: {
+                        normal: {
+                formatter: '{a}\n\n{c}\n',
+                textStyle: {
+                    fontSize: 15
+                    
+                }
+        }
+        }
+    },{
+        type: 'liquidFill',
+        name : '总人数：',
+        data: [{name: '', value: 1000}, 0.6, 0.4, 0.1],
+        direction: 'right',
+        radius: '60%',
+        shape: 'roundRect',
+        center: ['75%', '50%'],
+        backgroundStyle: {
+            borderColor: '#156ACF',
+            borderWidth: 1,
+            shadowColor: 'rgba(0, 0, 0, 0.4)',
+            shadowBlur: 15
+        },
+        outline: {
+            show: false
+        },
+        waveAnimation: true, // 禁止左右波动
+        label: {
+                        normal: {
+                formatter: '{a}\n\n{c}\n',
+                textStyle: {
+                    fontSize: 15
+                    
+                }
+        }
+        }
+    }]
+};
+myChartPeople.setOption(optionPeople);
+                             
+charts.push(myChartPeople);
+//仪表盘
+var myChartGauge1 = echarts.init(document.getElementById('gauge1'));
+var optionGauge1 = {
+    tooltip : {
+        formatter: "{a} <br/>{b} : {c}%",
+    },
+
+    series: [
+        {
+            name: '业务指标',
+            type: 'gauge',
+            radius: '95%',
+            detail: {formatter:'{value}%'},
+            axisLine: { // 坐标轴线  
+                        lineStyle: { // 属性lineStyle控制线条样式  
+                            color: [
+                                [0.2, '#c23531'],
+                                [0.8, '#63869e'],
+                                [1, '#91c7ae']
+                            ]
+                        }
+                    },
+                    splitLine: {            // 分隔线样式。
+                    show: false,             // 是否显示分隔线,默认 true。
+                    length: 30,             // 分隔线线长。支持相对半径的百分比,默认 30。
+                    lineStyle: {            // 分隔线样式。
+                        color: "#eee",              //线的颜色,默认 #eee。
+                        opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                        width: 2,                   //线度,默认 2。
+                        type: "solid",              //线的类型,默认 solid。 此外还有 dashed,dotted
+                        shadowBlur: 10,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。 
+                        shadowColor: "#fff",        //阴影颜色。支持的格式同color。
+                    }
+                },
+                
+                axisTick: {             // 刻度(线)样式。
+                    show: true,             // 是否显示刻度(线),默认 true。
+                    splitNumber: 1,         // 分隔线之间分割的刻度数,默认 5。
+                    length: 8,              // 刻度线长。支持相对半径的百分比,默认 8。
+                    lineStyle: {            // 刻度线样式。   
+                        color: "#eee",              //线的颜色,默认 #eee。
+                        opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                        width: 1,                   //线度,默认 1。
+                        type: "solid",              //线的类型,默认 solid。 此外还有 dashed,dotted
+                        shadowBlur: 10,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。 
+                        shadowColor: "#fff",        //阴影颜色。支持的格式同color。
+                    },
+                },
+            data: [{value: 50, name: '客户会签\n完成率'}]
+        }
+    ]
+};
+myChartGauge1.setOption(optionGauge1);
+setInterval(function () {
+    optionGauge1.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+    myChartGauge1.setOption(optionGauge1, true);
+},2000);
+charts.push(myChartGauge1);
+
+var myChartGauge2 = echarts.init(document.getElementById('gauge2'));
+var optionGauge2 = {
+    tooltip : {
+        formatter: "{a} <br/>{b} : {c}%"
+    },
+
+    series: [
+        {
+            name: '业务指标',
+            type: 'gauge',
+            radius: '95%',
+            detail: {formatter:'{value}%'},
+            axisLine: { // 坐标轴线  
+                        lineStyle: { // 属性lineStyle控制线条样式  
+                            color: [
+                                [0.2, '#c23531'],
+                                [0.8, '#63869e'],
+                                [1, '#91c7ae']
+                            ]
+                        }
+                    },
+                    splitLine: {            // 分隔线样式。
+                    show: false,             // 是否显示分隔线,默认 true。
+                    length: 30,             // 分隔线线长。支持相对半径的百分比,默认 30。
+                    lineStyle: {            // 分隔线样式。
+                        color: "#eee",              //线的颜色,默认 #eee。
+                        opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                        width: 2,                   //线度,默认 2。
+                        type: "solid",              //线的类型,默认 solid。 此外还有 dashed,dotted
+                        shadowBlur: 10,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。 
+                        shadowColor: "#fff",        //阴影颜色。支持的格式同color。
+                    }
+                },
+                
+                axisTick: {             // 刻度(线)样式。
+                    show: true,             // 是否显示刻度(线),默认 true。
+                    splitNumber: 1,         // 分隔线之间分割的刻度数,默认 5。
+                    length: 8,              // 刻度线长。支持相对半径的百分比,默认 8。
+                    lineStyle: {            // 刻度线样式。   
+                        color: "#eee",              //线的颜色,默认 #eee。
+                        opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                        width: 1,                   //线度,默认 1。
+                        type: "solid",              //线的类型,默认 solid。 此外还有 dashed,dotted
+                        shadowBlur: 10,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。 
+                        shadowColor: "#fff",        //阴影颜色。支持的格式同color。
+                    },
+                },
+            data: [{value: 50, name: '合同会签\n完成率'}]
+        }
+    ]
+};
+myChartGauge2.setOption(optionGauge2);
+setInterval(function () {
+    optionGauge2.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+    myChartGauge2.setOption(optionGauge2, true);
+},2000);
+charts.push(myChartGauge2);
+
+
+var myChartGauge3 = echarts.init(document.getElementById('gauge3'));
+var optionGauge3 = {
+    tooltip : {
+        formatter: "{a} <br/>{b} : {c}%"
+    },
+ 
+    series: [
+        {
+            name: '业务指标',
+            type: 'gauge',
+            radius: '95%',
+            detail: {formatter:'{value}%'},
+            axisLine: { // 坐标轴线  
+                        lineStyle: { // 属性lineStyle控制线条样式  
+                            color: [
+                                [0.2, '#c23531'],
+                                [0.8, '#63869e'],
+                                [1, '#91c7ae']
+                            ]
+                        }
+                    },
+                    splitLine: {            // 分隔线样式。
+                    show: false,             // 是否显示分隔线,默认 true。
+                    length: 30,             // 分隔线线长。支持相对半径的百分比,默认 30。
+                    lineStyle: {            // 分隔线样式。
+                        color: "#eee",              //线的颜色,默认 #eee。
+                        opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                        width: 2,                   //线度,默认 2。
+                        type: "solid",              //线的类型,默认 solid。 此外还有 dashed,dotted
+                        shadowBlur: 10,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。 
+                        shadowColor: "#fff",        //阴影颜色。支持的格式同color。
+                    }
+                },
+                
+                axisTick: {             // 刻度(线)样式。
+                    show: true,             // 是否显示刻度(线),默认 true。
+                    splitNumber: 1,         // 分隔线之间分割的刻度数,默认 5。
+                    length: 8,              // 刻度线长。支持相对半径的百分比,默认 8。
+                    lineStyle: {            // 刻度线样式。   
+                        color: "#eee",              //线的颜色,默认 #eee。
+                        opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                        width: 1,                   //线度,默认 1。
+                        type: "solid",              //线的类型,默认 solid。 此外还有 dashed,dotted
+                        shadowBlur: 10,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。 
+                        shadowColor: "#fff",        //阴影颜色。支持的格式同color。
+                    },
+                },
+            data: [{value: 50, name: '结算审批\n完成率'}]
+        }
+    ]
+};
+myChartGauge3.setOption(optionGauge3);
+setInterval(function () {
+    optionGauge3.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+    myChartGauge3.setOption(optionGauge3, true);
+},2000);
+charts.push(myChartGauge3)
+    //根据窗口的大小变动图表 --- 重点
+    window.onresize = function(){
+        for (var i = 0; i < charts.length; i ++){
+            charts[i].resize();
+        }
+        
+    
+    }
+//异步加载数据
+function readTextFile(file, callback) {
+var rawFile = new XMLHttpRequest();
+rawFile.overrideMimeType("application/json");
+rawFile.open("GET", file, false);
+rawFile.onreadystatechange = function() {
+    if (rawFile.readyState == 4){
+        if (rawFile.readyState === 0 || rawFile.status == 200) {
+            callback(rawFile.responseText);
+        }
+    }
+}
+
+rawFile.send(null);
+
+}
+// readTextFile("http://10.213.1.24:8066/cpum/custom/usercount", function(text){
+
+// var result = JSON.parse(text);
+// myChartPeople.setOption({
+//         series: [{
+//             data: [{name: '', value: result.data.people.online}, 0.4, 0.2, 0.1],
+//         },{
+//             data: [{name: '', value: result.data.people.total}, 0.6, 0.4, 0.1],
+  
+//         }]
+//     })
+// });
+$(function(){
+  loadInfo();
+  setInterval(function(){
+   loadInfo();
+  }, 5000);
+ });
+function loadInfo() {
+            $.getJSON("http://10.213.1.24:8066/cpum/custom/usercount", function(result) {
+                myChartPeople.setOption({
+                        series: [{
+                            data: [{name: '', value: result.data.people.online}, 0.4, 0.2, 0.1],
+                        },{
+                            data: [{name: '', value: result.data.people.total}, 0.6, 0.4, 0.1],
+                
+                        }]
+                    });
+            })
+        }
+
+var names=[];
+var values=[];
+readTextFile("http://10.213.1.24:8066/cpum/custom/tradingcount", function(text){
+
+    let result = JSON.parse(text);
+    var result1 = result.mapName.mapName;
+    for(var i=0;i<result1.length;i++) {
+        names.push(result1[i].name);
+        values.push(result1[i].value);
+    }
+    myChartBar.setOption({
+        xAxis: {
+                data: names
+            },
+            yAxis: {},
+            series: [{
+                name: '交易量',
+                type: 'bar',
+                data: values
+            }]
+        });
+})
+    </script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+
+  </body>
+
+</html>

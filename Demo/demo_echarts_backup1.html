@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+<head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <title>数据展示</title>
+            <script type="text/javascript" src="echarts.min.js"></script>
+            <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+            <script type="text/javascript" src="china.js"></script>
+            <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .main{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+        .flow-div{
+            width: 58%;
+            height: 70%;
+            float: left;
+        }
+        .pie-div{
+            width: 60%;
+            height: 50%;
+            float: left;
+        }
+        .map-div{
+            width: 42%;
+            height: 65%;
+            float: left;
+        }
+        .bar-div{
+            width: 40%;
+            height: 50%;
+            float: left;
+        }
+        #text{
+            z-index: 1;
+        }
+        
+        </style>
+</head>
+<body onload="init()" class="main" >
+    
+        <div id="container" class="map-div" ></div>
+        <div id="c2bb44c97b7b4f71b215bb1c2ad3182a" class="flow-div" ></div>
+        <div  id="09b58c7dce8842dd84690422fc4975b9" class="bar-div"></div>
+        <div id="d92634be206b4a458d7989143b5d1f7c" class="pie-div"></div>
+        
+    
+        
+        
+    <script>
+                //窗口大小变化时候，进行刷新页面操作，防止样式混乱
+        $(window).resize(function(){
+            location.reload()
+        });
+        var text = document.getElementById("text")
+        body.appendTo("text")
+        text = "hello"
+        console.log(text)
+        function pie(){
+            var chart_d92634be206b4a458d7989143b5d1f7c = echarts.init(
+            document.getElementById('d92634be206b4a458d7989143b5d1f7c'), 'white', {renderer: 'canvas'});
+        var option_d92634be206b4a458d7989143b5d1f7c = {
+                tooltip: {
+                    formatter: "{a} <br/>{b} : {c}%"
+                },
+
+                series: [{
+                    "radius": [
+                        110
+                    ],
+                    "center": [
+                        "25%",
+                        "40%"
+                    ],
+                    name: '业务指标',
+                    type: 'gauge',
+                    detail: { formatter: '{value}%' },
+                    data: [{ value: 50, name: '完成率' }]
+                },{
+                    "radius": [
+                        110
+                    ],
+                    "center": [
+                        "63%",
+                        "40%"
+                    ],
+                    name: '指标',
+                    type: 'gauge',
+                    detail: { formatter: '{value}%' },
+                    data: [{ value: 50, name: '完成率' }]
+                }]
+};
+        chart_d92634be206b4a458d7989143b5d1f7c.setOption(option_d92634be206b4a458d7989143b5d1f7c);
+
+        }
+function flow(){
+    var titles = ['会签工作流完成情况：','结算审批工作流完成情况：', '800已完成  200未完成  80%完成率', '650已完成  350未完成  65%成功率'];
+        var chart_c2bb44c97b7b4f71b215bb1c2ad3182a = echarts.init(
+            document.getElementById('c2bb44c97b7b4f71b215bb1c2ad3182a'), 'white', {renderer: 'canvas'});
+        var option_c2bb44c97b7b4f71b215bb1c2ad3182a = {
+    "animation": true,
+    "animationThreshold": 2000,
+    "animationDuration": 1000,
+    "animationEasing": "cubicOut",
+    "animationDelay": 0,
+    "animationDurationUpdate": 300,
+    "animationEasingUpdate": "cubicOut",
+    "animationDelayUpdate": 0,
+    "color": [
+        "#FF0000",
+        "#1C86EE",
+        "#20B2AA",
+
+
+
+    ],
+    "series": [
+        {
+            "type": "pie",
+            "clockwise": true,
+            "data": [
+                {
+                    "value": 20
+                },
+                {
+                    "name": "\u5386\u53f2\u62a5\u544a",
+                    "value": 80
+                }
+            ],
+            "radius": [
+                60,
+                80
+            ],
+            "center": [
+                "22%",
+                "40%"
+            ],
+            "label": {
+                "show": true,
+                "position": "center",
+                "margin": 8,
+                "formatter":     function(params) {        if(params.name == '')            return '\n\n\n' + params.name;        return params.name + ' : ' + params.value;    }    
+            }
+        },
+        {
+            "type": "pie",
+            "clockwise": true,
+            "data": [
+                {
+                    "value": 20
+                },
+                {
+                    "name": "\u6700\u8fd1\u4e00\u6b21\u6574\u6539\u62a5\u544a",
+                    "value": 80
+                }
+            ],
+            "radius": [
+                60,
+                80
+            ],
+            "center": [
+                "62%",
+                "40%"
+            ],
+            "label": {
+                "show": true,
+                "position": "center",
+                "margin": 8,
+                "formatter":     function(params) {        if(params.name == '')            return '\n\n\n' + params.name;        return params.name + ' : ' + params.value ;    }    
+            }
+        }
+    ],
+    "legend": [
+        {
+            "data": [
+                
+                "\u5386\u53f2\u62a5\u544a",
+                "\u6700\u8fd1\u4e00\u6b21\u6574\u6539\u62a5\u544a"
+            ],
+            "selected": {},
+            "type": "scroll",
+            "show": true,
+            "left": "80%",
+            "top": "20%",
+            "orient": "vertical"
+        }
+    ],
+    "tooltip": {
+        "show": true,
+        "trigger": "item",
+        "triggerOn": "mousemove|click",
+        "axisPointer": {
+            "type": "line"
+        },
+        "textStyle": {
+            "fontSize": 8
+        },
+        "borderWidth": 0
+    },
+title:[
+        {
+            text:titles[0],
+            left:'23%',
+            top:'0%',
+            textAlign:'center'
+        },
+        {
+            text:titles[1],
+            left:'63%',
+            top:'0%',
+            textAlign:'center'
+        },
+        {
+            text:titles[2],
+            left:'23%',
+            top:'75%',
+            textAlign:'center'
+        },
+        {
+            text:titles[3],
+            left:'63%',
+            top:'75%',
+            textAlign:'center'
+        }
+    ]
+};
+        chart_c2bb44c97b7b4f71b215bb1c2ad3182a.setOption(option_c2bb44c97b7b4f71b215bb1c2ad3182a);
+                // 异步加载数据
+
+    function readTextFile(file, callback) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function() {
+            if (rawFile.readyState == 4){
+                if (rawFile.readyState === 0 || rawFile.status == 200) {
+                callback(rawFile.responseText);
+            }
+            }
+        }
+        rawFile.send(null);
+    }
+    //usage:http://api.lwpoor.cn/echarts/getjson
+    readTextFile("http://api.lwpoor.cn/echarts/getjson", function(text){
+        var result = JSON.parse(text);
+        console.log(result);
+        chart_c2bb44c97b7b4f71b215bb1c2ad3182a.setOption({
+                series: [{
+                    data: [
+                {
+                    value: 200
+                },
+                {
+                    name: "会签完成数：",
+                    value: 800
+                }
+            ]
+                },{
+                    data: [
+                {
+                    value: 350
+                },
+                {
+                    name: "审批完成数：",
+                    value: 650
+                }
+            ]
+                }],
+                title: [
+                    {
+                        text: "会签工作流完成情况："
+                    }
+                ]
+            });
+    });
+        // 异步加载数据
+
+        function readTextFile(file, callback) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.overrideMimeType("application/json");
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function() {
+        if (rawFile.readyState == 4){
+            if (rawFile.readyState === 0 || rawFile.status == 200) {
+            callback(rawFile.responseText);
+        }
+        }
+    }
+    rawFile.send(null);
+}
+//usage:http://api.lwpoor.cn/echarts/getjson
+   readTextFile("http://api.lwpoor.cn/echarts/getjson", function(text){
+        var result = JSON.parse(text);
+        console.log(result);
+        chart_c2bb44c97b7b4f71b215bb1c2ad3182a.setOption({
+            series: [{
+                    data: [
+                {
+                    value: 200
+                },
+                {
+                    name: "会签完成数：",
+                    value: 800
+                }
+            ]
+                },{
+                    data: [
+                {
+                    value: 350
+                },
+                {
+                    name: "审批完成数：",
+                    value: 650
+                }
+            ]
+                }]
+            });
+    });
+}
+function map(){
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+option = null;
+
+option = {
+    title: {
+        text: '中联油业务分布图',
+        top: '4%',
+        subtext: '中国境内',
+        left: 'center'
+    },
+    tooltip: {
+        trigger: 'item'
+    },
+    legend: {
+        orient: 'vertical',
+        left: 'right',
+        data:['中联油业务分布图']
+    },
+
+
+	dataRange: {
+                    x: '-1000px',//图例横轴位置
+                    y: '-1000px',//图例纵轴位置
+                    orient: 'horizontal',
+                    min: 0,
+                    max: 55000,
+                    text: ['高', '低'],           // 文本，默认为数值文本
+                    splitList: [
+					{start: 1234, end: 1234, color: '#1E90FF'},
+					{start: 2, end: 2, color: '#F4A460'},
+					{start: 4, end: 4, color: '	#9932CC	'},
+					{start: 5, end: 5, color: '#00FF7F'},
+                    {start: 6, end: 6, color: '#F4A460'},
+                    {start: 8, end: 8, color:  '#6B8E23'},
+                    {start: 7, end: 7, color: '	#CD5C5C'},
+                    
+					],
+                    splitNumber: 0
+                },
+    series: [
+        {
+            name: '业务量',
+            type: 'map',
+            mapType: 'china',
+            roam: false,
+            center:[105, 35],
+            label: {
+                normal: {
+                    show: true
+                },
+                emphasis: {
+                    show: true
+                },
+                
+            },
+            data:[
+                {name: '西北地区',value: 1234 },
+				{name: '总部',value: 2 },
+				{name: '',value: 0 },
+				{name: '东北地区',value: 4 },
+				{name: '华东地区',value: 5 },
+                {name: '华南地区',value: 6 },
+                {name: '青岛',value: 8 },
+                {name: '西南地区',value: 7 },
+
+            ]
+        }
+    ]
+};
+
+    myChart.setOption(option);
+    // 异步加载数据
+
+    function readTextFile(file, callback) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.overrideMimeType("application/json");
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function() {
+        if (rawFile.readyState == 4){
+            if (rawFile.readyState === 0 || rawFile.status == 200) {
+            callback(rawFile.responseText);
+        }
+        }
+    }
+    rawFile.send(null);
+}
+//usage:http://api.lwpoor.cn/echarts/getjson
+   readTextFile("http://api.lwpoor.cn/echarts/getjson", function(text){
+        var result = JSON.parse(text);
+        console.log(result);
+        myChart.setOption({
+                dataRange: {
+                    x: '-1000px',//图例横轴位置
+                    y: '-1000px',//图例纵轴位置
+                    orient: 'horizontal',
+                    min: 0,
+                    max: 55000,
+                    text: ['高', '低'],           // 文本，默认为数值文本
+                    splitList: [
+					{start: result.Result.value[2], end: result.Result.value[2], color: '#1E90FF'},
+					{start: 2, end: 2, color: '#F4A460'},
+					{start: 4, end: 4, color: '	#9932CC	'},
+					{start: 5, end: 5, color: '#00FF7F'},
+                    {start: 6, end: 6, color: '#F4A460'},
+                    {start: 8, end: 8, color:  '#6B8E23'},
+                    {start: 7, end: 7, color: '	#CD5C5C'},
+                    
+					],
+                    splitNumber: 0
+                },
+                series: [{
+                    data:[
+                {name: '西北地区',value: result.Result.value[2] },
+				{name: '总部',value: 2 },
+				{name: '',value: 0 },
+				{name: '东北地区',value: 4 },
+				{name: '华东地区',value: 5 },
+                {name: '华南地区',value: 6 },
+                {name: '青岛',value: 8 },
+                {name: '西南地区',value: 7 },
+
+            ]
+                }]
+            });
+    });
+
+}
+function bar(){
+         var chart_09b58c7dce8842dd84690422fc4975b9 = echarts.init(
+            document.getElementById('09b58c7dce8842dd84690422fc4975b9'), 'white', {renderer: 'canvas'});
+        var option_09b58c7dce8842dd84690422fc4975b9 = {
+    "animation": true,
+    "animationThreshold": 2000,
+    "animationDuration": 1000,
+    "animationEasing": "cubicOut",
+    "animationDelay": 0,
+    "animationDurationUpdate": 300,
+    "animationEasingUpdate": "cubicOut",
+    "animationDelayUpdate": 0,
+    "color": [
+        "#c23531",
+        "#2f4554",
+        "#61a0a8",
+        "#d48265",
+        "#749f83",
+        "#ca8622",
+        "#bda29a",
+        "#6e7074",
+        "#546570",
+        "#c4ccd3",
+        "#f05b72",
+        "#ef5b9c",
+        "#f47920",
+        "#905a3d",
+        "#fab27b",
+        "#2a5caa",
+        "#444693",
+        "#726930",
+        "#b2d235",
+        "#6d8346",
+        "#ac6767",
+        "#1d953f",
+        "#6950a1",
+        "#918597"
+    ],
+    "series": [
+        {
+            "type": "bar",
+            "name": "\u4e1a\u52a1\u91cf",
+            "data": [
+                16065,
+                3521,
+                7330,
+                4329,
+                15231,
+                2190
+            ],
+            "barCategoryGap": "60%",
+            "label": {
+                "show": true,
+                "position": "top",
+                "margin": 8
+            },
+
+            "rippleEffect": {
+                "show": true,
+                "brushType": "stroke",
+                "scale": 2.5,
+                "period": 4
+            }
+        }
+    ],
+    "legend": [
+        {
+            "data": [
+                "\u4e1a\u52a1\u91cf"
+            ],
+            "selected": {
+                "\u4e1a\u52a1\u91cf": true
+            },
+            "show": true
+        }
+    ],
+    "tooltip": {
+        "show": true,
+        "trigger": "item",
+        "triggerOn": "mousemove|click",
+        "axisPointer": {
+            "type": "line"
+        },
+        "textStyle": {
+            "fontSize": 14
+        },
+        "borderWidth": 0
+    },
+    "xAxis": [
+        {
+            "show": true,
+            "scale": false,
+            "nameLocation": "end",
+            "nameGap": 15,
+            "gridIndex": 0,
+            "inverse": false,
+            "offset": 0,
+            "splitNumber": 5,
+            "minInterval": 0,
+            "splitLine": {
+                "show": false,
+                "lineStyle": {
+                    "width": 1,
+                    "opacity": 1,
+                    "curveness": 0,
+                    "type": "solid"
+                }
+            }
+        }
+    ],
+    "yAxis": [
+        {
+            "show": true,
+            "scale": false,
+            "nameLocation": "end",
+            "nameGap": 15,
+            "gridIndex": 0,
+            "inverse": false,
+            "offset": 0,
+            "splitNumber": 5,
+            "minInterval": 0,
+            "splitLine": {
+                "show": false,
+                "lineStyle": {
+                    "width": 1,
+                    "opacity": 1,
+                    "curveness": 0,
+                    "type": "solid"
+                }
+            },
+            "data": [
+                "\u603b\u90e8",
+                "\u897f\u5317",
+                "\u9752\u5c9b",
+                "\u534e\u5357",
+                "\u534e\u4e1c",
+                "\u4e1c\u5317"
+            ]
+        }
+    ],
+    "title": [
+        {
+            "text": "业务量：",
+            left: '5%'
+        }
+    ]
+};
+        chart_09b58c7dce8842dd84690422fc4975b9.setOption(option_09b58c7dce8842dd84690422fc4975b9);
+        // 异步加载数据
+
+        function readTextFile(file, callback) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function() {
+            if (rawFile.readyState == 4){
+                if (rawFile.readyState === 0 || rawFile.status == 200) {
+                callback(rawFile.responseText);
+            }
+            }
+        }
+        rawFile.send(null);
+    }
+    //usage:http://api.lwpoor.cn/echarts/getjson
+    readTextFile("http://gitee.com/haoshengqiang/JavaScript/raw/master/demo.json", function(text){
+        var result = JSON.parse(text);
+        console.log(result);
+        chart_09b58c7dce8842dd84690422fc4975b9.setOption({
+                yAxis: {
+                    data: result.Result.name
+                },
+                series: [{
+                    data: result.Result.value
+                }]
+            });
+    });
+}
+function init(){
+    flow();
+	pie();
+    map();
+    bar();
+}
+    </script>
+</body>
+</html>
